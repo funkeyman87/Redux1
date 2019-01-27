@@ -1,28 +1,62 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {connect} from 'react-redux';
+import Notes from './notes';
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      count: 0,
+    }
+  }
+  increment = () => {
+    // this.setState({
+    //   count: this.state.count + 1
+    //   })
+    this.props.dispatch({type: 'INCREMENT'})
+    }
+
+  decrement =() =>{
+    // this.setState({
+    //   count: this.state.count - 1
+    // })
+    this.props.dispatch({type: 'DECREMENT'})
+  }
+
+  incrementdua = () => {
+      this.props.dispatch({type: 'INCREMENTDUA', plus: 2})
+  }
+
   render() {
-    return (
+    console.log(this.props.count)
+    return(
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+          <Notes/>
+          <center>
+            <h1></h1>
+          </center>
+          <button onClick={() => this.decrement()}>
+          kurang
+          </button>
+          <span></span>
+          <button onClick={() => this.increment()}>
+          tambah
+          </button>
+          <span></span>
+          <button onClick={() => this.incrementdua()}>
+          tambah +2
+          </button>
+      </div>
       </div>
     );
   }
 }
+function mapStateToProps(state){
+  return {
+    count: state.count
+  }
+}
 
-export default App;
+export default connect(mapStateToProps)(App);
